@@ -31,6 +31,12 @@ const api = {
     });
     return response.data;
   },
+
+  // Get file info (metadata) for preview
+  getFileInfo: async (id) => {
+    const response = await apiClient.get(`/files/${id}/preview/?info=1`);
+    return response.data;
+  },
 };
 
 export default api;

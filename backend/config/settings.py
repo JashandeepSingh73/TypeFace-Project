@@ -81,3 +81,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+# Django REST Framework custom exception handler
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "common.exceptions.custom_exception_handler",
+}

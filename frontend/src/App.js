@@ -45,6 +45,8 @@ function App() {
   const [error, setError] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [fileToDelete, setFileToDelete] = useState(null);
+  const [imagePreview] = useState(null);
+  const [imageDialogOpen, setImageDialogOpen] = useState(false);
 
   const allFiles = files;
 
@@ -53,7 +55,7 @@ function App() {
       setLoading(true);
       setError(null);
       const response = await api.listFiles();
-      setFiles(response);
+      setFiles(response.data);
     } catch (err) {
       setError('Error fetching files. Please try again.');
       console.error('Error fetching files:', err);
@@ -103,6 +105,10 @@ function App() {
       setError('Error downloading file. Please try again.');
       console.error('Error downloading file:', err);
     }
+  };
+
+  const handlePreview = (file) => {
+    window.open(`http://localhost:8000/api/files/${file.id}/preview/`, '_blank');
   };
 
   return (
@@ -241,7 +247,7 @@ function App() {
                             <TableCell>{formatDate(file.uploaded_at)}</TableCell>
                             <TableCell align="right">
                               <IconButton
-                                onClick={() => window.open(`http://localhost:8000/api/files/${file.id}/preview/`, '_blank')}
+                                onClick={() => handlePreview(file)}
                                 title="Preview"
                                 sx={{ color: '#0061FF' }}
                               >
@@ -289,6 +295,19 @@ function App() {
                 <Button onClick={() => handleDelete(fileToDelete)} color="error" variant="contained">
                   Delete
                 </Button>
+              </DialogActions>
+            </Dialog>
+
+            {/* Image Preview Dialog */}
+            <Dialog open={imageDialogOpen} onClose={() => setImageDialogOpen(false)} maxWidth="md">
+              <DialogTitle>Image Preview</DialogTitle>
+              <DialogContent>
+                {imagePreview && (
+                  <img src={imagePreview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '70vh', display: 'block', margin: '0 auto' }} />
+                )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => setImageDialogOpen(false)} color="primary">Close</Button>
               </DialogActions>
             </Dialog>
           </>
