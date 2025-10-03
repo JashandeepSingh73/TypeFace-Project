@@ -34,8 +34,9 @@ TypeFace-Project/
    ```sh
    python manage.py runserver
    ```
-
+   
 ### Frontend (React)
+# Note: Open a new terminal
 1. Navigate to the `frontend` directory:
    ```sh
    cd frontend
