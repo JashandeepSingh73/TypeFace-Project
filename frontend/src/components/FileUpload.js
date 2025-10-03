@@ -47,26 +47,6 @@ function FileUpload({ onUploadComplete }) {
     }
   };
 
-  const handleDrop = (event) => {
-    event.preventDefault();
-    event.currentTarget.classList.remove('dragover');
-    
-    const file = event.dataTransfer?.files?.[0];
-    if (!file) return;
-    
-    setSelectedFile(file);
-    setError(null);
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    event.currentTarget.classList.add('dragover');
-  };
-
-  const handleDragLeave = (event) => {
-    event.currentTarget.classList.remove('dragover');
-  };
-
   const clearSelectedFile = () => {
     setSelectedFile(null);
     setError(null);

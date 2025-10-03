@@ -29,14 +29,6 @@ import {
 import FileUpload from './components/FileUpload';
 import api from './services/api';
 
-function formatSize(bytes) {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
-
 function formatDate(dateString) {
   return new Date(dateString).toLocaleString();
 }
@@ -90,18 +82,6 @@ function App() {
     } catch (err) {
       setError('Error downloading file. Please try again.');
       console.error('Error downloading file:', err);
-    }
-  };
-
-  const handlePreview = async (id) => {
-    try {
-      const blob = await api.downloadFile(id);
-      const url = window.URL.createObjectURL(blob);
-      window.open(url, '_blank');
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      setError('Error previewing file. Please try again.');
-      console.error('Error previewing file:', err);
     }
   };
 
