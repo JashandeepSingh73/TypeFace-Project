@@ -11,7 +11,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button
 } from '@mui/material';
 import {
   Delete as DeleteIcon,
@@ -37,6 +43,8 @@ function App() {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [fileToDelete, setFileToDelete] = useState(null);
 
   const allFiles = files;
 
@@ -66,6 +74,18 @@ function App() {
       setError('Error deleting file. Please try again.');
       console.error('Error deleting file:', err);
     }
+    setDeleteDialogOpen(false);
+    setFileToDelete(null);
+  };
+
+  const openDeleteDialog = (id) => {
+    setFileToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setFileToDelete(null);
   };
 
   const handleDownload = async (id, filename) => {
@@ -235,7 +255,7 @@ function App() {
                                 <DownloadIcon />
                               </IconButton>
                               <IconButton
-                                onClick={() => handleDelete(file.id)}
+                                onClick={() => openDeleteDialog(file.id)}
                                 title="Delete"
                                 sx={{ color: '#FF4D4F' }}
                               >
@@ -254,6 +274,23 @@ function App() {
                 </Typography>
               )}
             </Box>
+
+            <Dialog open={deleteDialogOpen} onClose={closeDeleteDialog}>
+              <DialogTitle>Confirm Delete</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to delete this file? This action cannot be undone.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={closeDeleteDialog} color="primary">
+                  Cancel
+                </Button>
+                <Button onClick={() => handleDelete(fileToDelete)} color="error" variant="contained">
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
           </>
         )}
       </Container>

@@ -95,43 +95,22 @@ function FileUpload({ onUploadComplete }) {
           </Typography>
         </Box>
       ) : (
-        <Box sx={{ width: '100%' }}>
-          <Box
-            sx={{
-              p: 2,
-              mb: 2,
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#F5F9FF',
-              borderRadius: 1
-            }}
-          >
-            <FileIcon sx={{ mr: 2, color: '#0061FF' }} />
-            <Box sx={{ flexGrow: 1, textAlign: 'left' }}>
-              <Typography 
-                variant="subtitle2" 
-                component="div" 
-                sx={{ 
-                  color: '#1E1919',
-                  fontWeight: 600
-                }}
-              >
-                {selectedFile.name}
-              </Typography>
-              <Typography 
-                variant="caption" 
-                color="text.secondary"
-              >
-                {formatSize(selectedFile.size)}
-              </Typography>
-            </Box>
-            <IconButton 
-              onClick={clearSelectedFile}
-              size="small"
-              sx={{ color: '#FF4D4F' }}
+        <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', backgroundColor: '#F5F9FF', borderRadius: 1, p: 2, mb: 2 }}>
+          <FileIcon sx={{ mr: 2, color: '#0061FF' }} />
+          <Box sx={{ flexGrow: 1, textAlign: 'left', minWidth: 0 }}>
+            <Typography 
+              variant="subtitle2" 
+              component="div" 
+              sx={{ color: '#1E1919', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
             >
-              <ClearIcon />
-            </IconButton>
+              {selectedFile.name}
+            </Typography>
+            <Typography 
+              variant="caption" 
+              color="text.secondary"
+            >
+              {formatSize(selectedFile.size)}
+            </Typography>
           </Box>
           <Button
             variant="contained"
@@ -140,16 +119,24 @@ function FileUpload({ onUploadComplete }) {
             disabled={uploading}
             sx={{
               backgroundColor: '#00A82D',
-              '&:hover': {
-                backgroundColor: '#009728'
-              }
+              ml: 2,
+              minWidth: 0,
+              px: 2,
+              '&:hover': { backgroundColor: '#009728' }
             }}
           >
             Upload
           </Button>
+          <IconButton 
+            onClick={clearSelectedFile}
+            size="small"
+            sx={{ color: '#FF4D4F', ml: 1 }}
+          >
+            <ClearIcon />
+          </IconButton>
         </Box>
       )}
-      <Box sx={{ mt: 2 }}>
+      <Box sx={{ mt: 0.01 }}>
         {uploading && <LinearProgress sx={{ mb: 1 }} />}
         {error && (
           <Paper 
